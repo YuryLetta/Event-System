@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<head>
+    <%- include ("../include/header") -%>
+    <link rel="stylesheet" href="/styles/speakers.css">
+    <title>List Events</title>
+
+</head>
+
+<body>
+    <%- include ("../include/nav") -%>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">title</th>
+                <th scope="col">Event Date</th>
+                <th scope="col">Main Speaker</th>
+                <th scope="col">Other Speakers</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% eventData.forEach(function(event){ %>
+            <tr>
+                <th scope="row"><%= event._id %></th>
+                <td><%= event.title %></td>
+                <td><%= event.eventdate.toDateString() %></td>
+                <td>
+                    <%if (event.mainSpeaker!=null) { %>
+                        <%= event.mainSpeaker.fullname %>
+                        <% } %>
+                </td>
+                <td>
+                    <ul>
+                        <% event.otherSpeakers.forEach(function(speaker){ %>
+                        <li><%= speaker.fullname %></;i>
+                            <% }); %>
+                    </ul>
+                </td>
+
+                <td><a class="btn btn-success" href="/events/edit/<%= event._id %>">Edit</a></td>
+                <td><a class="btn btn-danger" href="#" onclick="removeEvent(<%= event._id %>,this)">Remove</a></td>
+
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+</body>
+<script src="/js/admin.js"></script>
+
+
+</html>

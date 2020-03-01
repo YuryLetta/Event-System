@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<head>
+    <%- include ("../include/header") -%>
+    <link rel="stylesheet" href="/styles/speakers.css">
+    <title>Add Event</title>
+
+</head>
+
+<body>
+    <%- include ("../include/nav") -%>
+    <!-- <form action="/speakers/add" method="post" > -->
+    <div class="container ">
+        <form action="/events/add" method="post">
+            <div class="form-group">
+                <label>ID</label>
+                <input type="text" class="form-control" required name="_id">
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" required name="title">
+            </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" class="form-control" required name="eventdate">
+            </div>
+            <div class="form-group">
+                <label>Main Speaker</label>
+                <select class="form-control" name="mainSpeaker">
+                    <% speakers.forEach((speaker) =>{ %>
+                    <% if(speaker){ %>
+                    <option value="<%=speaker._id%>"><%= speaker.fullname %></option>
+                    <% } %>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Other Speakers</label>
+                <select multiple class="form-control" name="otherSpeakers">
+                    <% speakers.forEach((speaker) =>{ %>
+                        <% if(speaker){ %>
+                        <option value="<%=speaker._id%>"><%= speaker.fullname %></option>
+                        <% } %>
+                        <% }) %>
+                </select>
+            </div>
+            <input type="submit" value="Add Event" class="btn btn-success">
+
+        </form>
+    </div>
+</body>
+<script src="/js/admin.js"></script>
+
+
+</html>
