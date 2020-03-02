@@ -1,42 +1,51 @@
 <!DOCTYPE html>
+
 <head>
-    <%- include ("../include/header") -%>
-    <link rel="stylesheet" href="/styles/speakers.css">
-    <title>List Speakers</title>
-    
+  <%- include ("../include/header") -%>
+  <link rel="stylesheet" href="/styles/speakers.css">
+  <title>List Speakers</title>
+
 </head>
+
 <body>
-    <%- include ("../include/nav") -%>
-    <form action="/speakers/edit" method="post" >
-        <div class="form-row">
-            <div class="col-md-6 mb-3">
-                <label for="validationDefault01">ID</label>
-                <input name="_id"type="text" class="form-control" id="validationDefault01" placeholder="ID" readonly required value="<%= userData[0]._id %>">
-              </div>
-          <div class="col-md-6 mb-3">
-            <label for="validationDefault02">Full Name</label>
-            <input name="fullname" type="text" class="form-control" id="validationDefault02" placeholder="Full name" required value="<%= userData[0].fullname %>">
-          </div>
-      
-         
+  <%- include ("../include/nav") -%>
+  <div class="container">
+    <form action="/speakers/edit" method="post">
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label for="validationDefault01">ID</label>
+          <input name="_id" type="text" class="form-control" id="validationDefault01" placeholder="ID" readonly required
+            value="<%= userData[0]._id %>">
         </div>
-        <div class="form-row">
-          <div class="col-md-6 mb-3">
-            <label for="validationDefault04">City</label>
-            <input name="city" type="text" class="form-control" id="validationDefault04" placeholder="City" required value="<%= userData[0].address.city %>">
-          </div>
-          <div class="col-md-3 mb-3">
-            <label for="validationDefault05">Street</label>
-            <input name="street" type="text" class="form-control" id="validationDefault05" placeholder="Street" required value="<%= userData[0].address.street %>">
-          </div>
-          <div class="col-md-3 mb-3">
-            <label for="validationDefault06">Building</label>
-            <input name="building" type="text" class="form-control" id="validationDefault06" placeholder="Building" required value="<%= userData[0].address.building %>">
-          </div>
+        <div class="col-md-6 mb-3">
+          <label for="validationDefault02">Full Name</label>
+          <input name="fullname" type="text" class="form-control" id="validationDefault02" placeholder="Full name"
+            required value="<%= userData[0].fullname %>">
         </div>
-      
-        <button class="btn btn-primary" type="submit">Submit form</button>
-      </form>
+
+
+      </div>
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label for="validationDefault04">City</label>
+          <input name="city" type="text" class="form-control" id="validationDefault04" placeholder="City" required
+            value="<%= userData[0].address.city %>">
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="validationDefault05">Street</label>
+          <input name="street" type="text" class="form-control" id="validationDefault05" placeholder="Street" required
+            value="<%= userData[0].address.street %>">
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="validationDefault06">Building</label>
+          <input name="building" type="text" class="form-control" id="validationDefault06" placeholder="Building"
+            required value="<%= userData[0].address.building %>">
+        </div>
+      </div>
+
+      <button class="btn btn-primary" type="submit">Submit form</button>
+    </form>
+  </div>
 </body>
 <script src="/js/admin.js"></script>
 

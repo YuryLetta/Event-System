@@ -7,6 +7,7 @@ require("../Models/eventModel");
 let eventModel = mongoose.model("events");
 
 /************************************************** */
+
 speakerRouter.use((request, response, next) => {
     if (request.session.role == "speaker") {
         speakerRouter.get("/profile", (request, response) => {
@@ -32,23 +33,28 @@ speakerRouter.use((request, response, next) => {
                 }
             }).then((data) => {
                 request.session.name = request.body.fullname;
-                response.redirect("/speakers/profile");
+                return response.redirect("/speakers/profile");
             }).catch((err) => {
                 response.send(" " + err);
             });
         });
         speakerRouter.get("/currentEvents", (request, response) => {
-            eventModel.find({}).populate({
-                path: "mainSpeaker otherSpeakers"
-            }).then((data) => {
+            eventModel.find({
+                $or: [{
+                    mainSpeaker: request.session._id
+                }, {
+                    otherSpeakers: request.session._id
+                }]
+            }).populate({
+                    path: "mainSpeaker otherSpeakers"
+                }).then((data) => {
                 response.render("events/speakerCurrentEvents", {
                     eventData: data
-                })
+                });
             }).catch((err) => {
-                response.send(" " + err);
+                console.log(err);
             });
         });
-        next();
     } else if (request.session.role == "admin") {
         speakerRouter.get("/add", (request, response) => {
             response.render("speakers/addSpeaker");
@@ -56,7 +62,7 @@ speakerRouter.use((request, response, next) => {
         speakerRouter.post("/add", (request, response) => {
             let newSpeaker = new SpeakerModel(request.body);
             newSpeaker.save().then((data) => {
-                response.redirect("/speakers/list");
+                return response.redirect("/speakers/list");
             }).catch((err) => {
                 response.send(" " + err);
             });
@@ -85,7 +91,7 @@ speakerRouter.use((request, response, next) => {
                     "address.building": request.body.building
                 }
             }).then((data) => {
-                response.redirect("/speakers/list");
+                return response.redirect("/speakers/list");
             }).catch((err) => {
                 response.send(" " + err);
             });
@@ -104,18 +110,23 @@ speakerRouter.use((request, response, next) => {
 
         });
         speakerRouter.get("/list", (request, response) => {
-            SpeakerModel.find({}).then((data) => {
-                response.render("speakers/listSpeakers", {
-                    userData: data
-                })
-            }).catch((err) => {
-                response.send(" " + err);
-            });
-        });
-        next();
-    } else {
-        response.redirect("/login");
-    }
+            if (request.session.role == "admin") {
+                console.log("session role list", request.session.role);
 
+                SpeakerModel.find({}).then((data) => {
+                    response.render("speakers/listSpeakers", {
+                        userData: data
+                    })
+                }).catch((err) => {
+                    response.send(" " + err);
+                });
+            } else {
+                return response.redirect("/speakers/profile")
+            }
+        });
+    } else {
+        return response.redirect("/login");
+    }
+    next();
 });
 module.exports = speakerRouter;

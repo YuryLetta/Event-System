@@ -47,7 +47,7 @@ server.use((request, response, next) => {
     }
         
     else
-        response.redirect("/login");
+        return response.redirect("/login");
 });
 server.use("/speakers", speakerRouter);
 server.use("/events", eventRouter);
