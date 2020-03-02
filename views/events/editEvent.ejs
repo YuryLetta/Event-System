@@ -30,7 +30,7 @@
                 <select class="form-control" name="mainSpeaker">
                     <% speakers.forEach((speaker) =>{ %>
                     <% if(speaker._id){ %>
-                    <% if(speaker._id == eventData.mainSpeaker._id){ %>
+                    <% if(eventData.mainSpeaker && speaker._id == eventData.mainSpeaker._id){ %>
                     <option value="<%=speaker._id%>" selected><%= speaker.fullname %></option>
                     <% }else{%>
                     <option value="<%=speaker._id%>"><%= speaker.fullname %></option>

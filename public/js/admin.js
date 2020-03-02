@@ -1,5 +1,4 @@
 function removeSpeaker(ID, thisSope) {
-    // console.log($(thisSope).parents("tr"));
     $.ajax({
         url: 'http://localhost:8080/speakers/delete/' + ID,
         method: 'get',
@@ -12,7 +11,6 @@ function removeSpeaker(ID, thisSope) {
         }
     });
 }
-
 function removeEvent(ID, thisSope) {
     $.ajax({
         url: 'http://localhost:8080/events/delete/' + ID,
