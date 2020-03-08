@@ -1,18 +1,17 @@
 let express = require("express");
 let path = require("path");
 let mongoose = require("mongoose");
-
 let authenticationRouter = require("./Routers/authRouter");
 let speakerRouter = require("./Routers/speakerRouter");
+let speakersActionsRouter = require("./Routers/speakerActionsRouter");
 let eventRouter = require("./Routers/eventRouter");
 let adminRouter = require("./Routers/adminRouter");
 const session = require('express-session');
-
+let count = 0;
 const server = express();
 server.listen(8080, () => {
     console.log("Server is listening at 8080 ....");
 });
-
 /* ******************** DB Connection ***************** */
 mongoose.connect("mongodb://localhost:27017/EventSystem",{useNewUrlParser: true,useUnifiedTopology: true}).then(()=>{
     console.log("DB Connected");
@@ -44,14 +43,19 @@ server.use((request, response, next) => {
     {
         response.locals.speakername = request.session.name;
         next();
-    }
-        
+    }    
     else
         return response.redirect("/login");
 });
+server.use((request, response, next) => {
+    console.log("count "+count+" :"+request.session.role);
+    count++;
+    next();
+});
 server.use("/speakers", speakerRouter);
-server.use("/events", eventRouter);
 server.use("/admin", adminRouter);
+server.use("/events", eventRouter);
+server.use("/speaker", speakersActionsRouter);
 server.use(function (request, response, next) {
 //    response.send("Page Not Found");
    response.render("include/notFound");

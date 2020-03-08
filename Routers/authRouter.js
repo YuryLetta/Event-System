@@ -10,7 +10,7 @@ authenticationRouter.get("/login", (request, response) => {
     if (!request.session.role) {
         response.render("authentication/login");
     } else if (request.session.role == "speaker") {
-        return response.redirect("/speakers/profile");
+        return response.redirect("/speaker/profile");
     } else if (request.session.role == "admin") {
         return response.redirect("/admin/profile");
     }
@@ -33,7 +33,7 @@ authenticationRouter.post("/login", (request, response) => {
                 response.locals.speakername = request.session.name;
                 console.log("speaker name :", response.locals.speakername);
                 request.session.role = "speaker";
-                return response.redirect("/speakers/profile");
+                return response.redirect("/speaker/profile");
 
             }
         }).catch((err) => {
@@ -59,7 +59,7 @@ authenticationRouter.get("/logout", (request, response) => {
         if (err) {
             return console.log(err);
         }
-
+        console.log("destroyed") ;   
         return response.redirect("/login");
     })
 });

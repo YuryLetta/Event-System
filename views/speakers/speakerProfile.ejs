@@ -11,7 +11,7 @@
     <%- include ("../include/speakerNav") -%>
     <div class="container text-align-center">
         <h1 class="text-white p-1 pl-3 mt-3 bg-primary rounded-pill">My Profile</h1>
-        <form action="/speakers/updateProfile" method="post">
+        <form action="/speaker/updateProfile" method="post">
             <input name="_id" type="text" hidden value="<%= userData[0]._id %>">
             <div class="form-row">
                 <div class="col-12 mb-3">
